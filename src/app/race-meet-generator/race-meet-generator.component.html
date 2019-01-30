@@ -1,7 +1,6 @@
-<h2>{{hero.name | uppercase}} Details</h2>
-<div><span>id: </span>{{hero.id}}</div>
-<div>
-  <label>name:
-    <input [(ngModel)]="hero.name" placeholder="name">
-  </label>
-</div>
+  <form>
+    <label for="racename">Name</label>
+    <input id="racename" type="text" class="form-control" [formControl]="raceName">
+    {{raceName.value}}
+    <input type="button" value="Generate" [(ngSubmit)]="generateRaceMeet()" >
+  </form>
