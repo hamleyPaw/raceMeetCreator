@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { Hero } from '../models/hero';
-import { RaceMeetService } from '../race-meet.service';
+import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
 import { RaceMeetParameters } from '../models/racemeetparameters';
-import { FormControl } from '@angular/forms';
+import { FormGroup, FormControl } from '@angular/forms';
+import { Validators } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-race-meet-generator',
@@ -10,25 +10,37 @@ import { FormControl } from '@angular/forms';
   styleUrls: ['./race-meet-generator.component.css']
 })
 export class RaceMeetGeneratorComponent implements OnInit {
-  hero: Hero;
+  parametersToSend: RaceMeetParameters;
 
-  raceName = new FormControl('');
+  raceForm = this.fb.group({
+    racename: ['', Validators.required],
+    lanecount: [''],
+    racecount: ['']
+  });
 
-  constructor(private raceMeetService: RaceMeetService) { }
+  @Output() newMeetRequested = new EventEmitter<RaceMeetParameters>();
 
-  ngOnInit() {
-    this.hero = this.raceMeetService.getHero();
-  }
+  constructor(private fb: FormBuilder) {
+    this.parametersToSend = new RaceMeetParameters();
+    this.parametersToSend.name = 'test';
+    this.parametersToSend.racesPerMeetCount = 3;
+    this.parametersToSend.laneCount = 4;
+   }
+
+  ngOnInit() {  }
+
+  get racename() { return this.raceForm.get('racename'); }
+
+  get racecount() { return this.raceForm.get('racecount'); }
+
+  get lanecount() { return this.raceForm.get('lanecount'); }
 
   generateRaceMeet(): void {
-    let meetParams = new RaceMeetParameters();
+    this.parametersToSend.racesPerMeetCount = this.raceForm.get('racecount').value;
+    this.parametersToSend.laneCount = this.raceForm.get('lanecount').value;
+    this.parametersToSend.name = this.raceForm.get('racename').value;
 
-    meetParams.laneCount = 4;
-    meetParams.name = this.raceName.value;
-    meetParams.racesPerMeetCount = 8;
-
-    this.raceMeetService.generateRaceMeet(meetParams);
-
-    this.hero = this.raceMeetService.getHero();
+    // TODO return the paramaters object up to parent
+    this.newMeetRequested.emit(this.parametersToSend);
   }
 }

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { RaceMeetParameters } from './models/racemeetparameters';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,12 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'raceMeetCreator';
+
+  onNewMeetRequested(newMeetDetails: RaceMeetParameters){
+    this.title = newMeetDetails.name;
+
+    // TODO submit the parameters to the service
+
+    // TODO pass the results to the display component
+  }
 }

@@ -1,6 +1,23 @@
-  <form>
-    <label for="racename">Name</label>
-    <input id="racename" type="text" class="form-control" [formControl]="raceName">
-    {{raceName.value}}
-    <input type="button" value="Generate" [(ngSubmit)]="generateRaceMeet()" >
+  <form [formGroup]="raceForm" (ngSubmit)="generateRaceMeet()">
+    <div class="form-group">
+      <label for="racename">Name:</label>
+      <input id="racename" type="text" class="form-control" formControlName="racename">
+      <div *ngIf="racename.invalid && (racename.dirty || racename.touched)" class="alert alert-danger">
+        <div *ngIf="racename.errors.required">
+          Name is required.
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="laneCount">Lane Count:</label>
+      <input id="lanecount" type="number" class="form-control" formControlName="lanecount" min="3" max="12" >
+    </div>    
+    <div class="form-group">
+      <label for="raceCount">Race Count:</label>
+      <input id="racecount" type="number" class="form-control" formControlName="racecount" min="1" max="10">
+    </div>
+    <button class="btn btn-primary" type="submit" [disabled]="!raceForm.valid">Submit</button>
+    
   </form>
+
+  <p>Form Status: {{ raceForm.valid }}</p>

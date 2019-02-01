@@ -5,11 +5,13 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { RaceMeetGeneratorComponent } from './race-meet-generator/race-meet-generator.component';
+import { RaceMeetDetailsComponent } from './race-meet-details/race-meet-details.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    RaceMeetGeneratorComponent
+    RaceMeetGeneratorComponent,
+    RaceMeetDetailsComponent
   ],
   imports: [
     BrowserModule,

@@ -7,10 +7,5 @@
 
 <p>This is an app that will create an race schedule for your next FPV mini-quad race meet.</p>
 
-<h2>How it works?</h2>
-
-<p>Well, how does it work?</p>
-
-<app-race-meet-generator></app-race-meet-generator>
-
-<router-outlet></router-outlet>
+<app-race-meet-generator (newMeetRequested)="onNewMeetRequested($event)" ></app-race-meet-generator>
+<app-race-meet-details></app-race-meet-details>
