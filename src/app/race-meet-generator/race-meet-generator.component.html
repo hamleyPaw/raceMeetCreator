@@ -10,11 +10,30 @@
     </div>
     <div class="form-group">
       <label for="laneCount">Lane Count:</label>
-      <input id="lanecount" type="number" class="form-control" formControlName="lanecount" min="3" max="12" >
+      <input id="lanecount" type="number" class="form-control" formControlName="lanecount" min="3" max="8" >
+      <div *ngIf="lanecount.invalid && (lanecount.dirty || lanecount.touched)" class="alert alert-danger">
+        <div *ngIf="lanecount.errors.min">
+         Lane count min.
+        </div>
+        <div *ngIf="lanecount.errors.max">
+          Race count max.
+         </div>
+      </div>
     </div>    
     <div class="form-group">
       <label for="raceCount">Race Count:</label>
       <input id="racecount" type="number" class="form-control" formControlName="racecount" min="1" max="10">
+    </div>
+    <div formArrayName="racers">
+      <h3>Racers</h3> <button class="btn" (click)="addRacer()">Add Racer</button>
+    
+      <div *ngFor="let address of racers.controls; let i=index">
+        <!-- The repeated racer template -->
+        <label>
+          Name:
+          <input class="form-control" type="text" [formControlName]="i">
+        </label>
+      </div>
     </div>
     <button class="btn btn-primary" type="submit" [disabled]="!raceForm.valid">Submit</button>
     

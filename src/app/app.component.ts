@@ -9,7 +9,7 @@ import { RaceMeetParameters } from './models/racemeetparameters';
 export class AppComponent {
   title = 'raceMeetCreator';
 
-  onNewMeetRequested(newMeetDetails: RaceMeetParameters){
+  onNewMeetRequested(newMeetDetails: RaceMeetParameters) {
     this.title = newMeetDetails.name;
 
     // TODO submit the parameters to the service
