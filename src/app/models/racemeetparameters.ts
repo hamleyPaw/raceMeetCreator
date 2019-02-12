@@ -1,8 +1,8 @@
-import { Hero } from './hero';
+import { Racer } from './racer';
 
 export class RaceMeetParameters {
     laneCount: number;
     racesPerMeetCount: number;
     name: string;
-    racers: Hero[];
+    racers: Racer[];
 }

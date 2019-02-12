@@ -3,6 +3,7 @@ import { RaceMeetParameters } from '../models/racemeetparameters';
 import { FormGroup, FormControl, FormArray } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { FormBuilder } from '@angular/forms';
+import { Racer } from '../models/racer';
 
 @Component({
   selector: 'app-race-meet-generator',
@@ -14,9 +15,9 @@ export class RaceMeetGeneratorComponent implements OnInit {
 
   raceForm = this.fb.group({
     racename: ['', Validators.required],
-    lanecount: ['', [ Validators.min(4), Validators.max(8) ]],
+    lanecount: ['', [ Validators.min(4), Validators.max(6) ]],
     racecount: ['', [ Validators.min(1), Validators.max(10) ]],
-    racers: this.fb.array([this.fb.control('')])
+    racers: this.fb.array([])
   });
 
   @Output() newMeetRequested = new EventEmitter<RaceMeetParameters>();
@@ -42,12 +43,25 @@ export class RaceMeetGeneratorComponent implements OnInit {
     this.racers.push(this.fb.control(''));
   }
 
-  generateRaceMeet(): void {
+  deleteRacer(idx: number) {
+    console.log(idx);
+    this.racers.removeAt(idx);
+  }
+
+  generateRaceMeetParameters(): void {
     this.parametersToSend.racesPerMeetCount = this.raceForm.get('racecount').value;
     this.parametersToSend.laneCount = this.raceForm.get('lanecount').value;
     this.parametersToSend.name = this.raceForm.get('racename').value;
 
     // TODO add racers
+    let i = 1;
+
+    this.parametersToSend.racers = [];
+
+    for (const racer of this.racers.value) {
+      this.parametersToSend.racers.push({ id: i, name: racer });
+      i++;
+    }
 
     // Return the paramaters object up to parent
     this.newMeetRequested.emit(this.parametersToSend);

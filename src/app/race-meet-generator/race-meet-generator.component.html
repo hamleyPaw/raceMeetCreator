@@ -1,4 +1,4 @@
-  <form [formGroup]="raceForm" (ngSubmit)="generateRaceMeet()">
+  <form [formGroup]="raceForm" (ngSubmit)="generateRaceMeetParameters()">
     <div class="form-group">
       <label for="racename">Name:</label>
       <input id="racename" type="text" class="form-control" formControlName="racename">
@@ -10,7 +10,7 @@
     </div>
     <div class="form-group">
       <label for="laneCount">Lane Count:</label>
-      <input id="lanecount" type="number" class="form-control" formControlName="lanecount" min="3" max="8" >
+      <input id="lanecount" type="number" class="form-control" formControlName="lanecount" min="4" max="6" >
       <div *ngIf="lanecount.invalid && (lanecount.dirty || lanecount.touched)" class="alert alert-danger">
         <div *ngIf="lanecount.errors.min">
          Lane count min.
@@ -25,18 +25,22 @@
       <input id="racecount" type="number" class="form-control" formControlName="racecount" min="1" max="10">
     </div>
     <div formArrayName="racers">
-      <h3>Racers</h3> <button class="btn" (click)="addRacer()">Add Racer</button>
+      <h3>Racers</h3>
+      <button class="btn" (click)="addRacer()">Add Racer</button>
     
       <div *ngFor="let address of racers.controls; let i=index">
         <!-- The repeated racer template -->
-        <label>
-          Name:
-          <input class="form-control" type="text" [formControlName]="i">
-        </label>
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Racer name" [formControlName]="i">
+          <span class="input-group-btn">
+            <button class="btn btn-default" type="button"  (click)="deleteRacer(i)" ><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+          </span>
+        </div>
       </div>
     </div>
     <button class="btn btn-primary" type="submit" [disabled]="!raceForm.valid">Submit</button>
-    
   </form>
 
   <p>Form Status: {{ raceForm.valid }}</p>
+  <p>Form Value: {{ raceForm.value }}</p>
+
